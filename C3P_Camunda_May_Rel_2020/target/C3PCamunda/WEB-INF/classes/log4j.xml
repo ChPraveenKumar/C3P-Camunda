@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+ <log4j:configuration debug="true"
+        xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+        <appender name="console" class="org.apache.log4j.ConsoleAppender">
+            <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L %M - %m%n" />
+            </layout>
+        </appender>
+
+        <appender name="applicationLoggerAppender" class="org.apache.log4j.RollingFileAppender"> 
+            <param name="append" value="true" />
+            <param name="maxFileSize" value="10MB" />
+            <param name="maxBackupIndex" value="10" />
+            <param name="file" value="c3p-camunda-application.log" />
+            <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L %M - %m%n" />
+            </layout>
+        </appender>
+
+		<!-- Logger for application messages -->
+		<logger name="applicationLogger" additivity="false">
+			<!-- uncomment below line when don't want application logs -->
+			<!-- level value="OFF" / -->
+			<appender-ref ref="applicationLoggerAppender" />		
+		</logger>
+
+		<root>
+		    <level value="DEBUG" />
+		    <!-- appender-ref ref="console" / -->
+		    <appender-ref ref="applicationLoggerAppender" />
+		</root>
+
+ </log4j:configuration>
