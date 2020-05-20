@@ -1,5 +1,4 @@
-FROM tomcat:8
+FROM woahbase/alpine-wildfly
+EXPOSE 8080
+ADD target/C3PCamunda.war /opt/jboss/wildfly/standalone/deployments/
 
-COPY tomcat-users.xml /usr/local/tomcat/conf/
-
-COPY build/libs/* /usr/local/tomcat/webapps/
