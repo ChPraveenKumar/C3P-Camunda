@@ -1,1 +1,0 @@
-Kindly change wildfly deployment path when you checkout the project
