@@ -7,12 +7,12 @@ import java.sql.SQLException;
 public class ConnectionFactoryDB {
 	//static reference to itself
     private static ConnectionFactoryDB instance = new ConnectionFactoryDB();
-    public static final String URL = "jdbc:mysql://ms-shared-nad.techmahindra.com/tool-mysql-35913-development:3306/RequestInfo?zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true";
+    public static final String URL = "jdbc:mysql://tool-mysql-35913-development:3306/RequestInfo?zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true";
     public static final String USER = "root";
     public static final String PASSWORD = "root";
     public static final String DRIVER_CLASS = "com.mysql.jdbc.Driver"; 
     private static ConnectionFactoryDB instance1 = new ConnectionFactoryDB();
-    public static final String URL_TEMPLATE_DB = "jdbc:mysql://ms-shared-nad.techmahindra.com/tool-mysql-35913-development:3306/Template_Schema?zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true";
+    public static final String URL_TEMPLATE_DB = "jdbc:mysql://tool-mysql-35913-development:3306/Template_Schema?zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true";
 
     //private constructor
     private ConnectionFactoryDB() {
