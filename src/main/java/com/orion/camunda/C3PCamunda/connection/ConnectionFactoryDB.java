@@ -12,7 +12,7 @@ public class ConnectionFactoryDB {
     public static final String PASSWORD = "root";
     public static final String DRIVER_CLASS = "com.mysql.jdbc.Driver"; 
     private static ConnectionFactoryDB instance1 = new ConnectionFactoryDB();
-    public static final String URL_TEMPLATE_DB = "jdbc:mysql://tool-mysql-35913-development/Template_Schema?zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true";
+    public static final String URL_TEMPLATE_DB = "jdbc:mysql://tool-mysql-35913-development/Template_Schema?zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true&autoReconnect=true";
 
     //private constructor
     private ConnectionFactoryDB() {
