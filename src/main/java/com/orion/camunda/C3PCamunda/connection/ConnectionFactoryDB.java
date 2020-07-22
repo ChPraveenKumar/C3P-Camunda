@@ -7,7 +7,9 @@ import java.sql.SQLException;
 public class ConnectionFactoryDB {
 	//static reference to itself
     private static ConnectionFactoryDB instance = new ConnectionFactoryDB();
-    public static final String URL = "jdbc:mysql://tool-mysql-35913-development/requestinfo?autoReconnect=true&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true";
+    public static final String URL="jdbc:mysql://localhost:3306/c3pdbschema?autoReconnect=true&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true";
+    		
+    //public static final String URL = "jdbc:mysql://tool-mysql-35913-development/c3pdbschema?autoReconnect=true&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true";
     public static final String USER = "root";
     public static final String PASSWORD = "root";
     public static final String DRIVER_CLASS = "com.mysql.jdbc.Driver"; 
