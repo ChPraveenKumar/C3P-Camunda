@@ -50,6 +50,15 @@ public class CamundaInvokeC3PRestService {
 		return executeBpmProcess(PERFORM_REACHABILTY_TEST, businessKey, version);
 	}
 
+	public String checkRequestType(String businessKey) {	
+		String outputVar = "false";
+		logger.info("Inside CheckRequestType method");
+		if(businessKey !=null && businessKey.contains("SLGC-")) {
+        	outputVar="true";
+        }       
+		return outputVar;
+	}
+
 	public String deliverConfiguration(String businessKey, String version) {
 		logger.info("Inside deliverConfiguration method");
 		String reqType = null;

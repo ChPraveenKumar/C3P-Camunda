@@ -73,6 +73,12 @@ public class NewRequestWFStart implements JavaDelegate{
 			String status = (String) execution.getVariable("status");
 		    execution.setVariable("data",status);
 		}
+		else if(execution.getCurrentActivityId().equals("T_C3P_NewRequest_ChkRqstType")){
+			CamundaInvokeC3PRestService cs = new CamundaInvokeC3PRestService();
+			String result = cs.checkRequestType(businessKey);
+		    execution.setVariable("data",result);
+			
+		}
 		else if(execution.getCurrentActivityId().equals("EndEvent_15zjpyh")){
 			logger.info("WF ended of New request for '" + businessKey +"'");
 		}
