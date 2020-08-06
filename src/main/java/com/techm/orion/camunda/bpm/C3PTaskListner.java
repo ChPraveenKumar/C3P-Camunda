@@ -28,6 +28,7 @@ public class C3PTaskListner implements TaskListener {
 				&& ("UT_C3P_ApproverToAccessTemplateAvailableforApproval".equals(task.getTaskDefinitionKey())
 						|| "UT_C3P_NewRequest_AssignNotifyFEtoEstablishConnection"
 								.equals(task.getTaskDefinitionKey()))) {
+			logger.info("Demo purpose added this line");
 			String status = (String) task.getVariable("status");
 			task.setVariable("data", status);
 		}
