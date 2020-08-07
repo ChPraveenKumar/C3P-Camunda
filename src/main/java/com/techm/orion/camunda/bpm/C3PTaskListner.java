@@ -31,12 +31,6 @@ public class C3PTaskListner implements TaskListener {
 			String status = (String) task.getVariable("status");
 			task.setVariable("data", status);
 		}
-		
-		//Demo purpose adding this.		
-		if(TaskListener.EVENTNAME_COMPLETE.equals(task.getEventName())) {
-			//Demo
-			logger.info("Inside EventComplete method : EventName"+task.getEventName());
-		}
 	}
 
 }

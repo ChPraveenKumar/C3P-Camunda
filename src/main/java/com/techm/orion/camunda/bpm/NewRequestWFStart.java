@@ -85,9 +85,6 @@ public class NewRequestWFStart implements JavaDelegate{
 		else if(execution.getCurrentActivityId().equals("EndEvent_1x8soua")){
 			logger.info("WF on Hold for New request for '" + businessKey +"'");
 		}
-		else if(execution.getCurrentActivityId().equals("EndEvent_1x8souawwer")){
-			logger.info("Demo purpose businessKey- '" + businessKey +"'");
-		}
 		else{
 			logger.info("Not required activity");
 		}
