@@ -8,10 +8,13 @@
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="T_C3P_NewRequest_IsDeviceReachable" name="Is Device Reachable?">
       <bpmn:incoming>SequenceFlow_02tbk8n</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1fazhwy</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1addcdg</bpmn:outgoing>
-      <bpmn:outgoing>SequenceFlow_01zu3s2</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_02tbk8n" sourceRef="T_C3P_NewRequest_TriggertoCheckDeviceReachability" targetRef="T_C3P_NewRequest_IsDeviceReachable" />
+    <bpmn:sequenceFlow id="SequenceFlow_1fazhwy" name="No" sourceRef="T_C3P_NewRequest_IsDeviceReachable" targetRef="T_C3P_NewRequest_ChkRqstType">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${data.equals("false")}]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_1mqtiw5" sourceRef="T_C3P_NewRequest_GenerateBasicConfigurationasSubTask" targetRef="UT_C3P_NewRequest_AssignNotifyFEtoEstablishConnection" />
     <bpmn:sequenceFlow id="SequenceFlow_0hmgssp" sourceRef="UT_C3P_NewRequest_AssignNotifyFEtoEstablishConnection" targetRef="T_C3P_NewRequest_DeliverBasicConfSuccessfully" />
     <bpmn:exclusiveGateway id="T_C3P_NewRequest_DeliverBasicConfSuccessfully" name="Deliver basic Configuartion Successfully?">
@@ -77,7 +80,7 @@
       <bpmn:outgoing>SequenceFlow_1q7nyd4</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_01cshpb</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_1q7nyd4" name="Yes" sourceRef="ExclusiveGateway_14uiz0u" targetRef="T_C3P_NewRequest_PerformOthersTest">
+    <bpmn:sequenceFlow id="SequenceFlow_1q7nyd4" name="Yes" sourceRef="ExclusiveGateway_14uiz0u" targetRef="T_C3P_NewRequest_PerformNetworkAudit">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${data.equals("true")}]]></bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_01cshpb" name="No" sourceRef="ExclusiveGateway_14uiz0u" targetRef="UT_C3P_NewRequest_NotifyUserSEandRaiseRequest">
@@ -106,7 +109,8 @@
       <bpmn:incoming>SequenceFlow_01cshpb</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_1sz0you</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_0amgl2u</bpmn:incoming>
-      <bpmn:incoming>SequenceFlow_176cjc9</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1ekijf1</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1e7kc4t</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0788u5b</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="UT_C3P_NewRequest_NotifySE" name="Assign it to SE">
@@ -158,13 +162,13 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0788u5b" sourceRef="UT_C3P_NewRequest_NotifyUserSEandRaiseRequest" targetRef="T_C3P_NewRequest_CertifyTheDevicetobeUsedonNetwork" />
     <bpmn:task id="T_C3P_NewRequest_GenerateBasicConfigurationasSubTask" name="Generate Basic Configuration if it is New Case">
-      <bpmn:incoming>SequenceFlow_1ue1r5n</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0a6qdje</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1mqtiw5</bpmn:outgoing>
     </bpmn:task>
     <bpmn:sequenceFlow id="SequenceFlow_054oc1o" sourceRef="StartEvent_1" targetRef="T_C3P_NewRequest_TriggertoCheckDeviceReachability" />
     <bpmn:serviceTask id="T_C3P_NewRequest_PerformOthersTest" name="Perform and analyse all user configured tests" camunda:class="com.techm.orion.camunda.bpm.NewRequestWFStart">
       <bpmn:documentation>Perform and Analyze Test Response tests configured by user under others category</bpmn:documentation>
-      <bpmn:incoming>SequenceFlow_1q7nyd4</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0gnhswz</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1y9wdfd</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="ExclusiveGateway_0h1hmr3">
@@ -183,23 +187,34 @@
       <bpmn:incoming>SequenceFlow_1q7nyd4</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1pjlfl9</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="T_C3P_NewRequest_ChkRqstType" name="Check type of request" camunda:class="com.techm.orion.camunda.bpm.NewRequestWFStart">
-      <bpmn:incoming>SequenceFlow_01zu3s2</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1oe6uxw</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="SequenceFlow_01zu3s2" sourceRef="T_C3P_NewRequest_IsDeviceReachable" targetRef="T_C3P_NewRequest_ChkRqstType">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${data.equals("false")}]]></bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:exclusiveGateway id="T_C3P_NewRequest_IsRqstSlgc" name="Is request single config request?">
-      <bpmn:incoming>SequenceFlow_1oe6uxw</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1ue1r5n</bpmn:outgoing>
-      <bpmn:outgoing>SequenceFlow_176cjc9</bpmn:outgoing>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0p6ytqk">
+      <bpmn:incoming>SequenceFlow_1pjlfl9</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0gnhswz</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1ekijf1</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_1oe6uxw" sourceRef="T_C3P_NewRequest_ChkRqstType" targetRef="T_C3P_NewRequest_IsRqstSlgc" />
-    <bpmn:sequenceFlow id="SequenceFlow_1ue1r5n" name="Yes" sourceRef="T_C3P_NewRequest_IsRqstSlgc" targetRef="T_C3P_NewRequest_GenerateBasicConfigurationasSubTask">
+    <bpmn:sequenceFlow id="SequenceFlow_1pjlfl9" name="Is Audit Compliance successful?" sourceRef="T_C3P_NewRequest_PerformNetworkAudit" targetRef="ExclusiveGateway_0p6ytqk">
+      <bpmn:documentation>Is Audit Compliance successful?</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_0gnhswz" name="Yes" sourceRef="ExclusiveGateway_0p6ytqk" targetRef="T_C3P_NewRequest_PerformOthersTest">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${data.equals("true")}]]></bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_176cjc9" name="No" sourceRef="T_C3P_NewRequest_IsRqstSlgc" targetRef="UT_C3P_NewRequest_NotifyUserSEandRaiseRequest">
+    <bpmn:sequenceFlow id="SequenceFlow_1ekijf1" name="No" sourceRef="ExclusiveGateway_0p6ytqk" targetRef="UT_C3P_NewRequest_NotifyUserSEandRaiseRequest">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${data.equals("false")}]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="T_C3P_NewRequest_ChkRqstType" name="Check type of request" camunda:class="com.techm.orion.camunda.bpm.NewRequestWFStart">
+      <bpmn:incoming>SequenceFlow_1fazhwy</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1l9t76u</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="T_C3P_NewRequest_IsRqstSlgc" name="Is request single config request?">
+      <bpmn:incoming>SequenceFlow_1l9t76u</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0a6qdje</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1e7kc4t</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_1l9t76u" sourceRef="T_C3P_NewRequest_ChkRqstType" targetRef="T_C3P_NewRequest_IsRqstSlgc" />
+    <bpmn:sequenceFlow id="SequenceFlow_0a6qdje" name="yes" sourceRef="T_C3P_NewRequest_IsRqstSlgc" targetRef="T_C3P_NewRequest_GenerateBasicConfigurationasSubTask">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${data.equals("true")}]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1e7kc4t" sourceRef="T_C3P_NewRequest_IsRqstSlgc" targetRef="UT_C3P_NewRequest_NotifyUserSEandRaiseRequest">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${data.equals("false")}]]></bpmn:conditionExpression>
     </bpmn:sequenceFlow>
   </bpmn:process>
@@ -221,6 +236,15 @@
           <dc:Bounds x="847" y="198" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1fazhwy_di" bpmnElement="SequenceFlow_1fazhwy">
+        <di:waypoint xsi:type="dc:Point" x="89" y="235" />
+        <di:waypoint xsi:type="dc:Point" x="89" y="288" />
+        <di:waypoint xsi:type="dc:Point" x="89" y="288" />
+        <di:waypoint xsi:type="dc:Point" x="696" y="294" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-319" y="213" width="90" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1mqtiw5_di" bpmnElement="SequenceFlow_1mqtiw5">
         <di:waypoint xsi:type="dc:Point" x="89" y="421" />
         <di:waypoint xsi:type="dc:Point" x="89" y="506" />
@@ -239,7 +263,7 @@
       <bpmndi:BPMNShape id="ExclusiveGateway_1hre0pj_di" bpmnElement="T_C3P_NewRequest_DeliverBasicConfSuccessfully" isMarkerVisible="true">
         <dc:Bounds x="64" y="634" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="133" y="676" width="90" height="36" />
+          <dc:Bounds x="130" y="641" width="90" height="36" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1a3jwqk_di" bpmnElement="SequenceFlow_1a3jwqk">
@@ -261,8 +285,8 @@
         <dc:Bounds x="1216" y="170" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1k2pksf_di" bpmnElement="SequenceFlow_1k2pksf">
-        <di:waypoint xsi:type="dc:Point" x="484" y="699" />
-        <di:waypoint xsi:type="dc:Point" x="484" y="795" />
+        <di:waypoint xsi:type="dc:Point" x="460" y="557" />
+        <di:waypoint xsi:type="dc:Point" x="460" y="795" />
         <di:waypoint xsi:type="dc:Point" x="-158" y="795" />
         <di:waypoint xsi:type="dc:Point" x="-158" y="252" />
         <bpmndi:BPMNLabel>
@@ -355,8 +379,9 @@
         <di:waypoint xsi:type="dc:Point" x="2112" y="638" />
         <di:waypoint xsi:type="dc:Point" x="2112" y="667" />
         <di:waypoint xsi:type="dc:Point" x="2268" y="667" />
-        <di:waypoint xsi:type="dc:Point" x="2268" y="504" />
-        <di:waypoint xsi:type="dc:Point" x="2317" y="504" />
+        <di:waypoint xsi:type="dc:Point" x="2268" y="352" />
+        <di:waypoint xsi:type="dc:Point" x="2622" y="352" />
+        <di:waypoint xsi:type="dc:Point" x="2622" y="464" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="2152" y="635" width="90" height="12" />
         </bpmndi:BPMNLabel>
@@ -401,7 +426,7 @@
         <dc:Bounds x="1544" y="179" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_1euhe44_di" bpmnElement="UT_C3P_NewRequest_NotifySE">
-        <dc:Bounds x="404" y="619" width="100" height="80" />
+        <dc:Bounds x="380" y="477" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_0z27wqx_di" bpmnElement="StartEvent_1">
         <dc:Bounds x="-799" y="192" width="36" height="36" />
@@ -427,7 +452,8 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0uklhqs_di" bpmnElement="SequenceFlow_0uklhqs">
         <di:waypoint xsi:type="dc:Point" x="114" y="659" />
-        <di:waypoint xsi:type="dc:Point" x="399" y="659" />
+        <di:waypoint xsi:type="dc:Point" x="430" y="659" />
+        <di:waypoint xsi:type="dc:Point" x="430" y="557" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="304" y="638" width="90" height="12" />
         </bpmndi:BPMNLabel>
@@ -476,7 +502,7 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_0fs8hqh_di" bpmnElement="T_C3P_NewRequest_PerformOthersTest">
-        <dc:Bounds x="2321.6465942744326" y="463.9664363277394" width="100" height="80" />
+        <dc:Bounds x="2322" y="464" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_0h1hmr3_di" bpmnElement="ExclusiveGateway_0h1hmr3" isMarkerVisible="true">
         <dc:Bounds x="2347" y="676.542941757157" width="50" height="50" />
@@ -508,43 +534,69 @@
           <dc:Bounds x="2285" y="683" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ServiceTask_116pvxi_di" bpmnElement="T_C3P_NewRequest_ChkRqstType">
-        <dc:Bounds x="242.96407185628738" y="237.59580838323353" width="100" height="80" />
+      <bpmndi:BPMNShape id="ServiceTask_0k39xst_di" bpmnElement="T_C3P_NewRequest_PerformNetworkAudit">
+        <dc:Bounds x="2572" y="464" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_01zu3s2_di" bpmnElement="SequenceFlow_01zu3s2">
-        <di:waypoint xsi:type="dc:Point" x="89" y="235" />
-        <di:waypoint xsi:type="dc:Point" x="89" y="278" />
-        <di:waypoint xsi:type="dc:Point" x="243" y="278" />
+      <bpmndi:BPMNShape id="ExclusiveGateway_0p6ytqk_di" bpmnElement="ExclusiveGateway_0p6ytqk" isMarkerVisible="true">
+        <dc:Bounds x="2597" y="613" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="44" y="246.5" width="90" height="20" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ExclusiveGateway_1sxw4cy_di" bpmnElement="T_C3P_NewRequest_IsRqstSlgc" isMarkerVisible="true">
-        <dc:Bounds x="268" y="356" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="305" y="348" width="90" height="20" />
+          <dc:Bounds x="2577" y="663" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_1oe6uxw_di" bpmnElement="SequenceFlow_1oe6uxw">
-        <di:waypoint xsi:type="dc:Point" x="293" y="318" />
-        <di:waypoint xsi:type="dc:Point" x="293" y="356" />
+      <bpmndi:BPMNEdge id="SequenceFlow_1pjlfl9_di" bpmnElement="SequenceFlow_1pjlfl9">
+        <di:waypoint xsi:type="dc:Point" x="2622" y="544" />
+        <di:waypoint xsi:type="dc:Point" x="2622" y="613" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="248" y="327" width="90" height="20" />
+          <dc:Bounds x="2610" y="550.5" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_1ue1r5n_di" bpmnElement="SequenceFlow_1ue1r5n">
-        <di:waypoint xsi:type="dc:Point" x="268" y="381" />
-        <di:waypoint xsi:type="dc:Point" x="139" y="381" />
+      <bpmndi:BPMNEdge id="SequenceFlow_0gnhswz_di" bpmnElement="SequenceFlow_0gnhswz">
+        <di:waypoint xsi:type="dc:Point" x="2597" y="638" />
+        <di:waypoint xsi:type="dc:Point" x="2506" y="638" />
+        <di:waypoint xsi:type="dc:Point" x="2506" y="504" />
+        <di:waypoint xsi:type="dc:Point" x="2422" y="504" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="158.5" y="351" width="90" height="20" />
+          <dc:Bounds x="2537" y="618.5" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_176cjc9_di" bpmnElement="SequenceFlow_176cjc9">
-        <di:waypoint xsi:type="dc:Point" x="318" y="381" />
-        <di:waypoint xsi:type="dc:Point" x="1594" y="381" />
+      <bpmndi:BPMNEdge id="SequenceFlow_1ekijf1_di" bpmnElement="SequenceFlow_1ekijf1">
+        <di:waypoint xsi:type="dc:Point" x="2622" y="663" />
+        <di:waypoint xsi:type="dc:Point" x="2622" y="1009" />
+        <di:waypoint xsi:type="dc:Point" x="1594" y="1009" />
         <di:waypoint xsi:type="dc:Point" x="1594" y="259" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="441" y="357.5" width="90" height="20" />
+          <dc:Bounds x="2592" y="671" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1g9z2jv_di" bpmnElement="T_C3P_NewRequest_ChkRqstType">
+        <dc:Bounds x="696.1694152923538" y="253.57571214392806" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_03lfjjp_di" bpmnElement="T_C3P_NewRequest_IsRqstSlgc" isMarkerVisible="true">
+        <dc:Bounds x="721" y="356" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="764" y="353" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1l9t76u_di" bpmnElement="SequenceFlow_1l9t76u">
+        <di:waypoint xsi:type="dc:Point" x="746" y="334" />
+        <di:waypoint xsi:type="dc:Point" x="746" y="356" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="701" y="365.5" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0a6qdje_di" bpmnElement="SequenceFlow_0a6qdje">
+        <di:waypoint xsi:type="dc:Point" x="721" y="381" />
+        <di:waypoint xsi:type="dc:Point" x="139" y="381" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="576" y="361" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1e7kc4t_di" bpmnElement="SequenceFlow_1e7kc4t">
+        <di:waypoint xsi:type="dc:Point" x="771" y="381" />
+        <di:waypoint xsi:type="dc:Point" x="1566" y="381" />
+        <di:waypoint xsi:type="dc:Point" x="1566" y="262" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="701" y="277.5" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
