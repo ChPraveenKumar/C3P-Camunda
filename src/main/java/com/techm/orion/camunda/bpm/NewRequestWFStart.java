@@ -27,6 +27,11 @@ public class NewRequestWFStart implements JavaDelegate{
 			CamundaInvokeC3PRestService cs = new CamundaInvokeC3PRestService();
 			cs.insertRequestInDB(businessKey, (String) version, processId, (String) user);
 		}
+		else if(execution.getCurrentActivityId().equals("T_C3P_NewRequest_Instantiation")){
+			CamundaInvokeC3PRestService cs = new CamundaInvokeC3PRestService();
+			String result = cs.instantiation(businessKey,(String) version);
+		    execution.setVariable("data", result);
+		}
 		else if(execution.getCurrentActivityId().equals("T_C3P_NewRequest_TriggertoCheckDeviceReachability")){
 			CamundaInvokeC3PRestService cs = new CamundaInvokeC3PRestService();
 			String result = cs.checkDeviceReachability(businessKey,(String) version);

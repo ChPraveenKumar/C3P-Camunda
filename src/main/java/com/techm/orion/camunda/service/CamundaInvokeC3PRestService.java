@@ -44,6 +44,8 @@ public class CamundaInvokeC3PRestService {
 	private static final String PERFORM_PREVALIDATE_TEST = endpointUrl
 			+ "/C3P/DeviceReachabilityAndPreValidationTest/performPrevalidateTest";
 	private static final String PREVALIDATE_ODL = endpointUrl + "/C3P/vnfservices/prevalidateODL";
+	private static final String PERFORM_INSTANTIATION = endpointUrl
+			+ "/C3P/Instantiation/performInstantiation";
 
 	public String checkDeviceReachability(String businessKey, String version) {
 		logger.info("Inside checkDeviceReachability method");
@@ -103,6 +105,11 @@ public class CamundaInvokeC3PRestService {
 	public String selectRequestInDB(String businessKey, String version) {
 		logger.info("Inside selectRequestInDB method");
 		return executeBpmProcess(SELECT_REQUEST_IN_DB, businessKey, version);
+	}
+	
+	public String instantiation(String businessKey, String version) {
+		logger.info("Inside Instantiation");
+		return executeBpmProcess(PERFORM_INSTANTIATION, businessKey, version);
 	}
 
 	@SuppressWarnings("unchecked")
