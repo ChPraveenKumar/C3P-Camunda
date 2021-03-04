@@ -10,7 +10,8 @@ import org.apache.log4j.Logger;
  */
 public enum BpmLabels {
 	/* Sql properties */
-	SQL_URL, SQL_USER, SQL_PASSWORD, SQL_DRIVER_CLASS, SQL_TEMPLATE_DB_URL;
+	SQL_URL, SQL_USER, SQL_PASSWORD, SQL_DRIVER_CLASS, SQL_TEMPLATE_DB_URL,
+	EXTERNAL_SERVICE;
 
 	private static final Logger logger = LoggerUtil.getApplicationLogger(BpmLabels.class);
 	private static ResourceBundle resourceLabels;
