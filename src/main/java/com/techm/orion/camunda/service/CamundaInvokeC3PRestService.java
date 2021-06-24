@@ -273,7 +273,7 @@ public class CamundaInvokeC3PRestService {
 			String type = businessKey.substring(0, Math.min(businessKey.length(), 4));
 			logger.info("triggerExternalService -  type" + type);
 			if ("SLGM".equals(type) || "SNAI".equals(type) || "SLGT".equals(type) || "SLGF".equals(type)
-					|| "SLGB".equals(type)) {
+					|| "SLGB".equals(type) || "SNAD".equals(type)) {
 				HttpURLConnection httpConnection = openHttpConnection(UPDATE_MILESTONE);
 				if (httpConnection != null) {
 					String mileStoneStatus = "true".equals(outputVar) ? "Pass" :"Fail";
