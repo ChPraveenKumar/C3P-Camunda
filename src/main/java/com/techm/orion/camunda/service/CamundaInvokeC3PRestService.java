@@ -50,6 +50,20 @@ public class CamundaInvokeC3PRestService {
 	private static final String UPDATE_MILESTONE = endpointUrl
 			+ "/C3P/Instantiation/pushMilestoneInfo";
 
+	private static final String FWU_LOGIN = endpointUrl
+			+ "";
+	private static final String FWU_CHECK_FLASH_SIZE = endpointUrl
+			+ "";
+	private static final String FWU_BACKUP = endpointUrl
+			+ "";
+	private static final String FWU_BOOT_SYSTEM_FLASH = endpointUrl
+			+ "";
+	private static final String FWU_RELOAD = endpointUrl
+			+ "";
+	private static final String FWU_POST_LOGIN = endpointUrl
+			+ "";
+	private static final String FWU_OS_DOWNLOAD = endpointUrl
+			+ "";
 	public String checkDeviceReachability(String businessKey, String version) {
 		logger.info("Inside checkDeviceReachability method");
 		return executeBpmProcess(PERFORM_REACHABILTY_TEST, businessKey, version);
@@ -115,6 +129,7 @@ public class CamundaInvokeC3PRestService {
 		return executeBpmProcess(PERFORM_INSTANTIATION, businessKey, version);
 	}
 
+	
 	@SuppressWarnings("unchecked")
 	public void insertRequestInDB(String businessKey, String version, String processId, String user) {
 		logger.info("Inside insertRequestInDB method");
@@ -314,4 +329,33 @@ public class CamundaInvokeC3PRestService {
 		return milestone;
 	}
 
+	public String fwu_login(String businessKey, String version) {
+		logger.info("Inside fwu_login");
+		return executeBpmProcess(FWU_LOGIN, businessKey, version);
+	}
+	public String fwu_check_flash_size(String businessKey, String version) {
+		logger.info("Inside fwu_check_flash_size");
+		return executeBpmProcess(FWU_CHECK_FLASH_SIZE, businessKey, version);
+	}
+	public String fwu_backup(String businessKey, String version) {
+		logger.info("Inside fwu_backup");
+		return executeBpmProcess(FWU_BACKUP, businessKey, version);
+	}
+	public String fwu_os_download(String businessKey, String version) {
+		logger.info("Inside fwu_os_download");
+		return executeBpmProcess(FWU_OS_DOWNLOAD, businessKey, version);
+	}
+	public String fwu_boot_system_flash(String businessKey, String version) {
+		logger.info("Inside fwu_boot_system_flash");
+		return executeBpmProcess(FWU_BOOT_SYSTEM_FLASH, businessKey, version);
+	}
+	public String fwu_reload(String businessKey, String version) {
+		logger.info("Inside fwu_reload");
+		return executeBpmProcess(FWU_RELOAD, businessKey, version);
+	}
+	public String fwu_post_login(String businessKey, String version) {
+		logger.info("Inside fwu_post_login");
+		return executeBpmProcess(FWU_POST_LOGIN, businessKey, version);
+	}
+	
 }

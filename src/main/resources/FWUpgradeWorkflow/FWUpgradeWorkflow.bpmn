@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="C3P_FWUpgrade_workflow" name="FW Upgrade Workflow" isExecutable="true">
+    <bpmn:startEvent id="T_C3P_FWUpgrade_StartEvent1" name="Start">
+      <bpmn:extensionElements>
+        <camunda:executionListener class="com.techm.orion.camunda.bpm.FWUpgradeWorkflowStart" event="end" />
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_1ah8f93</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="T_C3P_FWUpgrade_Login" name="Login" camunda:class="com.techm.orion.camunda.bpm.FWUpgradeWorkflowStart">
+      <bpmn:documentation>Login to device and check if successful</bpmn:documentation>
+      <bpmn:incoming>SequenceFlow_1ah8f93</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1scoo3g</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_1mgqmv2" name="Is Login successful">
+      <bpmn:incoming>SequenceFlow_1scoo3g</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1may3la</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1be5ots</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="T_C3P_FWUpgrade_CheckFlash" name="Check flash size" camunda:class="com.techm.orion.camunda.bpm.FWUpgradeWorkflowStart">
+      <bpmn:documentation>Check flash size</bpmn:documentation>
+      <bpmn:incoming>SequenceFlow_1may3la</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0klz79q</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_039dro1" name="Is requirement satisfied?">
+      <bpmn:incoming>SequenceFlow_0klz79q</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1wsggaz</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1fu6twu</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="T_C3P_FWUpgrade_Backup" name="Back up" camunda:class="com.techm.orion.camunda.bpm.FWUpgradeWorkflowStart">
+      <bpmn:incoming>SequenceFlow_1wsggaz</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0mjtf0q</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_12ht3oj" name="Is backup successful?">
+      <bpmn:incoming>SequenceFlow_0mjtf0q</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_191l8uh</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0vikpu7</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="T_C3P_FWUpgrade_OSDownload" name="OS Download" camunda:class="com.techm.orion.camunda.bpm.FWUpgradeWorkflowStart">
+      <bpmn:incoming>SequenceFlow_191l8uh</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1r55d9c</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0lqpp7y" name="Is donload successful?">
+      <bpmn:incoming>SequenceFlow_1r55d9c</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_02tioma</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1v3f4mi</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="T_C3P_FWUpgrade_BootSystemFlash" name="Boot system flash" camunda:class="com.techm.orion.camunda.bpm.FWUpgradeWorkflowStart">
+      <bpmn:incoming>SequenceFlow_02tioma</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1rk5ogn</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0dbw5v9" name="Is successful?">
+      <bpmn:incoming>SequenceFlow_1rk5ogn</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_03sahak</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_10ouke8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="T_C3P_FWUpgrade_Reload" name="Reload" camunda:class="com.techm.orion.camunda.bpm.FWUpgradeWorkflowStart">
+      <bpmn:incoming>SequenceFlow_03sahak</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1rt28s3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0jzari1" name="Is successful?">
+      <bpmn:incoming>SequenceFlow_1rt28s3</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0llsfrl</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_09kam52</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="T_C3P_FWUpgrade_Postlogin" name="Postlogin" camunda:class="com.techm.orion.camunda.bpm.FWUpgradeWorkflowStart">
+      <bpmn:incoming>SequenceFlow_0llsfrl</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0w3elq6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="T_C3P_FWUpgrade_EndEvent">
+      <bpmn:extensionElements>
+        <camunda:executionListener class="com.techm.orion.camunda.bpm.FWUpgradeWorkflowStart" event="start" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1be5ots</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1fu6twu</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0vikpu7</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1v3f4mi</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_10ouke8</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_09kam52</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0w3elq6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1ah8f93" sourceRef="T_C3P_FWUpgrade_StartEvent1" targetRef="T_C3P_FWUpgrade_Login" />
+    <bpmn:sequenceFlow id="SequenceFlow_1scoo3g" sourceRef="T_C3P_FWUpgrade_Login" targetRef="ExclusiveGateway_1mgqmv2" />
+    <bpmn:sequenceFlow id="SequenceFlow_1may3la" name="YES" sourceRef="ExclusiveGateway_1mgqmv2" targetRef="T_C3P_FWUpgrade_CheckFlash">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${data.equals("true")}]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1be5ots" name="NO" sourceRef="ExclusiveGateway_1mgqmv2" targetRef="T_C3P_FWUpgrade_EndEvent">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${data.equals("false")}]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_0klz79q" sourceRef="T_C3P_FWUpgrade_CheckFlash" targetRef="ExclusiveGateway_039dro1" />
+    <bpmn:sequenceFlow id="SequenceFlow_1wsggaz" name="YES" sourceRef="ExclusiveGateway_039dro1" targetRef="T_C3P_FWUpgrade_Backup">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${data.equals("true")}]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1fu6twu" name="NO" sourceRef="ExclusiveGateway_039dro1" targetRef="T_C3P_FWUpgrade_EndEvent">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${data.equals("false")}]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_0mjtf0q" sourceRef="T_C3P_FWUpgrade_Backup" targetRef="ExclusiveGateway_12ht3oj" />
+    <bpmn:sequenceFlow id="SequenceFlow_191l8uh" name="YES" sourceRef="ExclusiveGateway_12ht3oj" targetRef="T_C3P_FWUpgrade_OSDownload">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${data.equals("true")}]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_0vikpu7" name="NO" sourceRef="ExclusiveGateway_12ht3oj" targetRef="T_C3P_FWUpgrade_EndEvent">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${data.equals("false")}]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1r55d9c" sourceRef="T_C3P_FWUpgrade_OSDownload" targetRef="ExclusiveGateway_0lqpp7y" />
+    <bpmn:sequenceFlow id="SequenceFlow_02tioma" name="YES" sourceRef="ExclusiveGateway_0lqpp7y" targetRef="T_C3P_FWUpgrade_BootSystemFlash">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${data.equals("true")}]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1v3f4mi" sourceRef="ExclusiveGateway_0lqpp7y" targetRef="T_C3P_FWUpgrade_EndEvent">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${data.equals("false")}]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1rk5ogn" sourceRef="T_C3P_FWUpgrade_BootSystemFlash" targetRef="ExclusiveGateway_0dbw5v9" />
+    <bpmn:sequenceFlow id="SequenceFlow_03sahak" name="YES" sourceRef="ExclusiveGateway_0dbw5v9" targetRef="T_C3P_FWUpgrade_Reload">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${data.equals("true")}]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_10ouke8" name="NO" sourceRef="ExclusiveGateway_0dbw5v9" targetRef="T_C3P_FWUpgrade_EndEvent">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${data.equals("false")}]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1rt28s3" sourceRef="T_C3P_FWUpgrade_Reload" targetRef="ExclusiveGateway_0jzari1" />
+    <bpmn:sequenceFlow id="SequenceFlow_0llsfrl" name="YES" sourceRef="ExclusiveGateway_0jzari1" targetRef="T_C3P_FWUpgrade_Postlogin">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${data.equals("true")}]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_09kam52" name="NO" sourceRef="ExclusiveGateway_0jzari1" targetRef="T_C3P_FWUpgrade_EndEvent">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${data.equals("false")}]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_0w3elq6" sourceRef="T_C3P_FWUpgrade_Postlogin" targetRef="T_C3P_FWUpgrade_EndEvent" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="C3P_FWUpgrade_workflow">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="T_C3P_FWUpgrade_StartEvent1">
+        <dc:Bounds x="173" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_1x5pzhn_di" bpmnElement="T_C3P_FWUpgrade_Login">
+        <dc:Bounds x="285.8607594936709" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_1mgqmv2_di" bpmnElement="ExclusiveGateway_1mgqmv2" isMarkerVisible="true">
+        <dc:Bounds x="440.8607594936709" y="95" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="420.8607594936709" y="145" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0nndjl6_di" bpmnElement="T_C3P_FWUpgrade_CheckFlash">
+        <dc:Bounds x="548.8607594936709" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_039dro1_di" bpmnElement="ExclusiveGateway_039dro1" isMarkerVisible="true">
+        <dc:Bounds x="706.8607594936709" y="95" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="686.8607594936709" y="145" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0t66iry_di" bpmnElement="T_C3P_FWUpgrade_Backup">
+        <dc:Bounds x="819.8607594936709" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_12ht3oj_di" bpmnElement="ExclusiveGateway_12ht3oj" isMarkerVisible="true">
+        <dc:Bounds x="970.8607594936709" y="95.49367088607596" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="950.8607594936709" y="145.49367088607596" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_1pnkxia_di" bpmnElement="T_C3P_FWUpgrade_OSDownload">
+        <dc:Bounds x="1083.860759493671" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_0lqpp7y_di" bpmnElement="ExclusiveGateway_0lqpp7y" isMarkerVisible="true">
+        <dc:Bounds x="1219.126582278481" y="95" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1199.126582278481" y="145" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0smum5c_di" bpmnElement="T_C3P_FWUpgrade_BootSystemFlash">
+        <dc:Bounds x="1323.126582278481" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_0dbw5v9_di" bpmnElement="ExclusiveGateway_0dbw5v9" isMarkerVisible="true">
+        <dc:Bounds x="1469.632911392405" y="95" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1449.632911392405" y="145" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_152m1ms_di" bpmnElement="T_C3P_FWUpgrade_Reload">
+        <dc:Bounds x="1584.632911392405" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_0jzari1_di" bpmnElement="ExclusiveGateway_0jzari1" isMarkerVisible="true">
+        <dc:Bounds x="1722.632911392405" y="95.49367088607596" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1702.632911392405" y="145.49367088607596" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_18rirlj_di" bpmnElement="T_C3P_FWUpgrade_Postlogin">
+        <dc:Bounds x="1831.2784810126582" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1i7k4r6_di" bpmnElement="T_C3P_FWUpgrade_EndEvent">
+        <dc:Bounds x="2001.2784810126582" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1974.2784810126582" y="138" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1ah8f93_di" bpmnElement="SequenceFlow_1ah8f93">
+        <di:waypoint xsi:type="dc:Point" x="209" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="286" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="202.5" y="110" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1scoo3g_di" bpmnElement="SequenceFlow_1scoo3g">
+        <di:waypoint xsi:type="dc:Point" x="386" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="441" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="368.5" y="110" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1may3la_di" bpmnElement="SequenceFlow_1may3la">
+        <di:waypoint xsi:type="dc:Point" x="491" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="549" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="461" y="100" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1be5ots_di" bpmnElement="SequenceFlow_1be5ots">
+        <di:waypoint xsi:type="dc:Point" x="466" y="95" />
+        <di:waypoint xsi:type="dc:Point" x="466" y="-301" />
+        <di:waypoint xsi:type="dc:Point" x="2019" y="-301" />
+        <di:waypoint xsi:type="dc:Point" x="2019" y="102" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="963" y="-321.5" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0klz79q_di" bpmnElement="SequenceFlow_0klz79q">
+        <di:waypoint xsi:type="dc:Point" x="649" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="707" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="633" y="110" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1wsggaz_di" bpmnElement="SequenceFlow_1wsggaz">
+        <di:waypoint xsi:type="dc:Point" x="757" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="820" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="740.5" y="128" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1fu6twu_di" bpmnElement="SequenceFlow_1fu6twu">
+        <di:waypoint xsi:type="dc:Point" x="732" y="95" />
+        <di:waypoint xsi:type="dc:Point" x="732" y="-275" />
+        <di:waypoint xsi:type="dc:Point" x="2019" y="-275" />
+        <di:waypoint xsi:type="dc:Point" x="2019" y="102" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1199" y="-293.5" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0mjtf0q_di" bpmnElement="SequenceFlow_0mjtf0q">
+        <di:waypoint xsi:type="dc:Point" x="920" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="945" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="945" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="971" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="900" y="105" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_191l8uh_di" bpmnElement="SequenceFlow_191l8uh">
+        <di:waypoint xsi:type="dc:Point" x="1020" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="1047" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="1047" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="1084" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1002" y="105" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0vikpu7_di" bpmnElement="SequenceFlow_0vikpu7">
+        <di:waypoint xsi:type="dc:Point" x="996" y="96" />
+        <di:waypoint xsi:type="dc:Point" x="996" y="-258" />
+        <di:waypoint xsi:type="dc:Point" x="2019" y="-258" />
+        <di:waypoint xsi:type="dc:Point" x="2019" y="102" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="928" y="-244.5" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1r55d9c_di" bpmnElement="SequenceFlow_1r55d9c">
+        <di:waypoint xsi:type="dc:Point" x="1184" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="1219" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1152" y="105" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_02tioma_di" bpmnElement="SequenceFlow_02tioma">
+        <di:waypoint xsi:type="dc:Point" x="1269" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="1291" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="1291" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="1323" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1246" y="105" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1v3f4mi_di" bpmnElement="SequenceFlow_1v3f4mi">
+        <di:waypoint xsi:type="dc:Point" x="1244" y="95" />
+        <di:waypoint xsi:type="dc:Point" x="1244" y="-226" />
+        <di:waypoint xsi:type="dc:Point" x="2019" y="-226" />
+        <di:waypoint xsi:type="dc:Point" x="2019" y="102" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1560" y="100.5" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1rk5ogn_di" bpmnElement="SequenceFlow_1rk5ogn">
+        <di:waypoint xsi:type="dc:Point" x="1423" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="1470" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1396" y="105" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_03sahak_di" bpmnElement="SequenceFlow_03sahak">
+        <di:waypoint xsi:type="dc:Point" x="1520" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="1541" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="1541" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="1585" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1496" y="105" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_10ouke8_di" bpmnElement="SequenceFlow_10ouke8">
+        <di:waypoint xsi:type="dc:Point" x="1495" y="95" />
+        <di:waypoint xsi:type="dc:Point" x="1495" y="-208" />
+        <di:waypoint xsi:type="dc:Point" x="2019" y="-208" />
+        <di:waypoint xsi:type="dc:Point" x="2019" y="102" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1433" y="-199.5" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1rt28s3_di" bpmnElement="SequenceFlow_1rt28s3">
+        <di:waypoint xsi:type="dc:Point" x="1685" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="1723" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1656" y="105" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0llsfrl_di" bpmnElement="SequenceFlow_0llsfrl">
+        <di:waypoint xsi:type="dc:Point" x="1772" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="1831" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1749.5" y="133" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_09kam52_di" bpmnElement="SequenceFlow_09kam52">
+        <di:waypoint xsi:type="dc:Point" x="1748" y="96" />
+        <di:waypoint xsi:type="dc:Point" x="1748" y="-180" />
+        <di:waypoint xsi:type="dc:Point" x="2019" y="-180" />
+        <di:waypoint xsi:type="dc:Point" x="2019" y="102" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1687" y="-158" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0w3elq6_di" bpmnElement="SequenceFlow_0w3elq6">
+        <di:waypoint xsi:type="dc:Point" x="1931" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="1965" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="1965" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="2001" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1920" y="105" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
