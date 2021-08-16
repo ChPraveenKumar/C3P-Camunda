@@ -24,6 +24,7 @@ public class CamundaInvokeC3PRestService {
 	private static String endpointUrl = DBUrlSingleton.getInstance().getEndpointUrl();
 	private static final Logger logger = LoggerUtil.getApplicationLogger(CamundaInvokeC3PRestService.class);
 
+	
 	private static final String PERFORM_REACHABILTY_TEST = endpointUrl
 			+ "/C3P/DeviceReachabilityAndPreValidationTest/performReachabiltyTest";
 	private static final String DELIVER_CONFIGURATION_TEST = endpointUrl
@@ -45,25 +46,22 @@ public class CamundaInvokeC3PRestService {
 	private static final String PERFORM_PREVALIDATE_TEST = endpointUrl
 			+ "/C3P/DeviceReachabilityAndPreValidationTest/performPrevalidateTest";
 	private static final String PREVALIDATE_ODL = endpointUrl + "/C3P/vnfservices/prevalidateODL";
-	private static final String PERFORM_INSTANTIATION = endpointUrl
-			+ "/C3P/Instantiation/performInstantiation";
-	private static final String UPDATE_MILESTONE = endpointUrl
-			+ "/C3P/Instantiation/pushMilestoneInfo";
-
-	private static final String FWU_LOGIN = endpointUrl
-			+ "";
+	private static final String PERFORM_INSTANTIATION = endpointUrl + "/C3P/Instantiation/performInstantiation";
+	private static final String UPDATE_MILESTONE = endpointUrl + "/C3P/Instantiation/pushMilestoneInfo";
+	
+	private static final String FWU_LOGIN = endpointUrl + "/C3P/DeliverConfigurationAndBackupTest/firmwareupgradeLogin";
 	private static final String FWU_CHECK_FLASH_SIZE = endpointUrl
-			+ "";
-	private static final String FWU_BACKUP = endpointUrl
-			+ "";
+			+ "/C3P/DeliverConfigurationAndBackupTest/c3pCheckAvailableFlashSizeOnDevice";
+	private static final String FWU_BACKUP = endpointUrl + "/C3P/DeliverConfigurationAndBackupTest/firmwareBackup";
 	private static final String FWU_BOOT_SYSTEM_FLASH = endpointUrl
-			+ "";
-	private static final String FWU_RELOAD = endpointUrl
-			+ "";
+			+ "/C3P/DeliverConfigurationAndBackupTest/c3pBootSystemFlash";
+	private static final String FWU_RELOAD = endpointUrl + "/C3P/DeliverConfigurationAndBackupTest/firmwareReload";
 	private static final String FWU_POST_LOGIN = endpointUrl
-			+ "";
+			+ "/C3P/DeliverConfigurationAndBackupTest/firmwareupgradeLogin";
 	private static final String FWU_OS_DOWNLOAD = endpointUrl
-			+ "";
+			+ "/C3P/DeliverConfigurationAndBackupTest/c3pCopyImageOnDevice";
+	
+	
 	public String checkDeviceReachability(String businessKey, String version) {
 		logger.info("Inside checkDeviceReachability method");
 		return executeBpmProcess(PERFORM_REACHABILTY_TEST, businessKey, version);
