@@ -24,6 +24,7 @@ public class CamundaInvokeC3PRestService {
 	private static String endpointUrl = DBUrlSingleton.getInstance().getEndpointUrl();
 	private static final Logger logger = LoggerUtil.getApplicationLogger(CamundaInvokeC3PRestService.class);
 
+	
 	private static final String PERFORM_REACHABILTY_TEST = endpointUrl
 			+ "/C3P/DeviceReachabilityAndPreValidationTest/performReachabiltyTest";
 	private static final String DELIVER_CONFIGURATION_TEST = endpointUrl
@@ -45,11 +46,22 @@ public class CamundaInvokeC3PRestService {
 	private static final String PERFORM_PREVALIDATE_TEST = endpointUrl
 			+ "/C3P/DeviceReachabilityAndPreValidationTest/performPrevalidateTest";
 	private static final String PREVALIDATE_ODL = endpointUrl + "/C3P/vnfservices/prevalidateODL";
-	private static final String PERFORM_INSTANTIATION = endpointUrl
-			+ "/C3P/Instantiation/performInstantiation";
-	private static final String UPDATE_MILESTONE = endpointUrl
-			+ "/C3P/Instantiation/pushMilestoneInfo";
-
+	private static final String PERFORM_INSTANTIATION = endpointUrl + "/C3P/Instantiation/performInstantiation";
+	private static final String UPDATE_MILESTONE = endpointUrl + "/C3P/Instantiation/pushMilestoneInfo";
+	
+	private static final String FWU_LOGIN = endpointUrl + "/C3P/DeliverConfigurationAndBackupTest/firmwareupgradeLogin";
+	private static final String FWU_CHECK_FLASH_SIZE = endpointUrl
+			+ "/C3P/DeliverConfigurationAndBackupTest/c3pCheckAvailableFlashSizeOnDevice";
+	private static final String FWU_BACKUP = endpointUrl + "/C3P/DeliverConfigurationAndBackupTest/firmwareBackup";
+	private static final String FWU_BOOT_SYSTEM_FLASH = endpointUrl
+			+ "/C3P/DeliverConfigurationAndBackupTest/c3pBootSystemFlash";
+	private static final String FWU_RELOAD = endpointUrl + "/C3P/DeliverConfigurationAndBackupTest/firmwareReload";
+	private static final String FWU_POST_LOGIN = endpointUrl
+			+ "/C3P/DeliverConfigurationAndBackupTest/firmwareupgradeLogin";
+	private static final String FWU_OS_DOWNLOAD = endpointUrl
+			+ "/C3P/DeliverConfigurationAndBackupTest/c3pCopyImageOnDevice";
+	
+	
 	public String checkDeviceReachability(String businessKey, String version) {
 		logger.info("Inside checkDeviceReachability method");
 		return executeBpmProcess(PERFORM_REACHABILTY_TEST, businessKey, version);
@@ -115,6 +127,7 @@ public class CamundaInvokeC3PRestService {
 		return executeBpmProcess(PERFORM_INSTANTIATION, businessKey, version);
 	}
 
+	
 	@SuppressWarnings("unchecked")
 	public void insertRequestInDB(String businessKey, String version, String processId, String user) {
 		logger.info("Inside insertRequestInDB method");
@@ -314,4 +327,33 @@ public class CamundaInvokeC3PRestService {
 		return milestone;
 	}
 
+	public String fwuLogin(String businessKey, String version) {
+		logger.info("Inside fwu_login");
+		return executeBpmProcess(FWU_LOGIN, businessKey, version);
+	}
+	public String fwuCheckFlashSize(String businessKey, String version) {
+		logger.info("Inside fwu_check_flash_size");
+		return executeBpmProcess(FWU_CHECK_FLASH_SIZE, businessKey, version);
+	}
+	public String fwuBackup(String businessKey, String version) {
+		logger.info("Inside fwu_backup");
+		return executeBpmProcess(FWU_BACKUP, businessKey, version);
+	}
+	public String fwuOsDownload(String businessKey, String version) {
+		logger.info("Inside fwu_os_download");
+		return executeBpmProcess(FWU_OS_DOWNLOAD, businessKey, version);
+	}
+	public String fwuBootSystemFlash(String businessKey, String version) {
+		logger.info("Inside fwu_boot_system_flash");
+		return executeBpmProcess(FWU_BOOT_SYSTEM_FLASH, businessKey, version);
+	}
+	public String fwuReload(String businessKey, String version) {
+		logger.info("Inside fwu_reload");
+		return executeBpmProcess(FWU_RELOAD, businessKey, version);
+	}
+	public String fwuPostLogin(String businessKey, String version) {
+		logger.info("Inside fwu_post_login");
+		return executeBpmProcess(FWU_POST_LOGIN, businessKey, version);
+	}
+	
 }
