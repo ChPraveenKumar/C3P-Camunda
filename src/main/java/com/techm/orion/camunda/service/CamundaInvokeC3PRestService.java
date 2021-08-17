@@ -329,31 +329,31 @@ public class CamundaInvokeC3PRestService {
 		return milestone;
 	}
 
-	public String fwu_login(String businessKey, String version) {
+	public String fwuLogin(String businessKey, String version) {
 		logger.info("Inside fwu_login");
 		return executeBpmProcess(FWU_LOGIN, businessKey, version);
 	}
-	public String fwu_check_flash_size(String businessKey, String version) {
+	public String fwuCheckFlashSize(String businessKey, String version) {
 		logger.info("Inside fwu_check_flash_size");
 		return executeBpmProcess(FWU_CHECK_FLASH_SIZE, businessKey, version);
 	}
-	public String fwu_backup(String businessKey, String version) {
+	public String fwuBackup(String businessKey, String version) {
 		logger.info("Inside fwu_backup");
 		return executeBpmProcess(FWU_BACKUP, businessKey, version);
 	}
-	public String fwu_os_download(String businessKey, String version) {
+	public String fwuOsDownload(String businessKey, String version) {
 		logger.info("Inside fwu_os_download");
 		return executeBpmProcess(FWU_OS_DOWNLOAD, businessKey, version);
 	}
-	public String fwu_boot_system_flash(String businessKey, String version) {
+	public String fwuBootSystemFlash(String businessKey, String version) {
 		logger.info("Inside fwu_boot_system_flash");
 		return executeBpmProcess(FWU_BOOT_SYSTEM_FLASH, businessKey, version);
 	}
-	public String fwu_reload(String businessKey, String version) {
+	public String fwuReload(String businessKey, String version) {
 		logger.info("Inside fwu_reload");
 		return executeBpmProcess(FWU_RELOAD, businessKey, version);
 	}
-	public String fwu_post_login(String businessKey, String version) {
+	public String fwuPostLogin(String businessKey, String version) {
 		logger.info("Inside fwu_post_login");
 		return executeBpmProcess(FWU_POST_LOGIN, businessKey, version);
 	}
