@@ -1,4 +1,4 @@
-package com.techm.orion.camunda.common;
+package com.techm.c3p.workflow.camunda.common;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -7,29 +7,29 @@ import java.sql.Statement;
 
 import org.apache.log4j.Logger;
 
-import com.techm.orion.camunda.connection.ConnectionFactoryDB;
+import com.techm.c3p.workflow.camunda.connection.ConnectionFactoryDB;
 
-public class DBUrlSingleton {
+public class DBPythonUrlSingleton {
 
-	private static final Logger logger = LoggerUtil.getApplicationLogger(DBUrlSingleton.class);
+	private static final Logger logger = LoggerUtil.getApplicationLogger(DBPythonUrlSingleton.class);
 
 	// static variable instance of type DBUrlSingleton
-	private static DBUrlSingleton instance = null;
+	private static DBPythonUrlSingleton instance = null;
 	private String endpointUrl;
 	private Connection connection;
 	private Statement statement;
 
 	// private constructor restricted to this class itself
-	private DBUrlSingleton() {
+	private DBPythonUrlSingleton() {
 		connection = ConnectionFactoryDB.getConnection();
-		String query = "select endpoint_value from endpointurls where endpoint_name = 'c3p_java_url'";
+		String query = "select endpoint_value from endpointurls where endpoint_name = 'c3p_python_url'";
 		ResultSet rs = null;
 		try {
 			statement = connection.createStatement();
 			rs = statement.executeQuery(query);
 			while (rs.next()) {
 				setEndpointUrl(rs.getString("endpoint_value"));
-				logger.info("Endpoint value for C3P java is " + getEndpointUrl());
+				logger.info("Endpoint value for C3P Python is " + getEndpointUrl());
 			}
 		} catch (SQLException exe) {
 			logger.error("ERROR: Unable to Create connection." + exe.getMessage());
@@ -42,10 +42,10 @@ public class DBUrlSingleton {
 	}
 
 	// static method to create instance of Singleton class
-	public static DBUrlSingleton getInstance() {
+	public static DBPythonUrlSingleton getInstance() {
 		if (instance == null) {
-			instance = new DBUrlSingleton();
-			logger.info("Instance created for DBUrlSingleton class to fetch Endpoint URL");
+			instance = new DBPythonUrlSingleton();
+			logger.info("Instance created for DBPythonUrlSingleton class to fetch Endpoint URL");
 		}
 
 		return instance;

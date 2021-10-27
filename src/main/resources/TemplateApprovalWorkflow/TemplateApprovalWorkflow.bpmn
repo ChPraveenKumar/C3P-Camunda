@@ -8,7 +8,7 @@
           <camunda:formField id="version" label="Version" type="string" />
           <camunda:formField id="approver" label="Approver" type="string" />
         </camunda:formData>
-        <camunda:executionListener class="com.techm.orion.camunda.bpm.TemplateApprovalWFStart" event="end" />
+        <camunda:executionListener class="com.techm.c3p.workflow.camunda.bpm.TemplateApprovalWFStart" event="end" />
       </bpmn:extensionElements>
       <bpmn:outgoing>SequenceFlow_01c3j2g</bpmn:outgoing>
     </bpmn:startEvent>
@@ -20,8 +20,8 @@
           <camunda:formField id="status" label="Status" type="string" />
           <camunda:formField id="comments" label="Comments" type="string" />
         </camunda:formData>
-        <camunda:taskListener class="com.techm.orion.camunda.bpm.C3PTaskListner" event="create" />
-        <camunda:taskListener class="com.techm.orion.camunda.bpm.C3PTaskListner" event="complete" />
+        <camunda:taskListener class="com.techm.c3p.workflow.camunda.bpm.C3PTaskListner" event="create" />
+        <camunda:taskListener class="com.techm.c3p.workflow.camunda.bpm.C3PTaskListner" event="complete" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0mr7z0z</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_10ce27p</bpmn:outgoing>
@@ -45,27 +45,27 @@
     <bpmn:sequenceFlow id="SequenceFlow_138968u" sourceRef="Task_01puz9e" targetRef="T_C3P_ChangeTemplateStatusRejected" />
     <bpmn:endEvent id="T_C3P_EndEvent_1" name="Template Approval workflow ends">
       <bpmn:extensionElements>
-        <camunda:executionListener class="com.techm.orion.camunda.bpm.TemplateApprovalWFStart" event="end" />
+        <camunda:executionListener class="com.techm.c3p.workflow.camunda.bpm.TemplateApprovalWFStart" event="end" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0q08ta2</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0q08ta2" sourceRef="T_C3P_SetTemplateStatusApproved" targetRef="T_C3P_EndEvent_1" />
     <bpmn:endEvent id="T_C3P_EndEvent_2" name="Template Approval workflow ends">
       <bpmn:extensionElements>
-        <camunda:executionListener class="com.techm.orion.camunda.bpm.TemplateApprovalWFStart" event="end" />
+        <camunda:executionListener class="com.techm.c3p.workflow.camunda.bpm.TemplateApprovalWFStart" event="end" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_015ji0a</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_015ji0a" sourceRef="T_C3P_ChangeTemplateStatusRejected" targetRef="T_C3P_EndEvent_2" />
-    <bpmn:serviceTask id="T_C3P_AllocateTemplateApprovalReqtoPredefinedApprover" name="Allocate Template Approval Requset to Predefined Approver" camunda:class="com.techm.orion.camunda.bpm.TemplateApprovalWFStart">
+    <bpmn:serviceTask id="T_C3P_AllocateTemplateApprovalReqtoPredefinedApprover" name="Allocate Template Approval Requset to Predefined Approver" camunda:class="com.techm.c3p.workflow.camunda.bpm.TemplateApprovalWFStart">
       <bpmn:incoming>SequenceFlow_01c3j2g</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0mr7z0z</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="T_C3P_SetTemplateStatusApproved" name="Set the template status to &#34;Approved&#34;" camunda:class="com.techm.orion.camunda.bpm.TemplateApprovalWFStart">
+    <bpmn:serviceTask id="T_C3P_SetTemplateStatusApproved" name="Set the template status to &#34;Approved&#34;" camunda:class="com.techm.c3p.workflow.camunda.bpm.TemplateApprovalWFStart">
       <bpmn:incoming>SequenceFlow_0j8zt5e</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0q08ta2</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="T_C3P_ChangeTemplateStatusRejected" name="Change the template status to &#34;Rejected&#34;" camunda:class="com.techm.orion.camunda.bpm.TemplateApprovalWFStart">
+    <bpmn:serviceTask id="T_C3P_ChangeTemplateStatusRejected" name="Change the template status to &#34;Rejected&#34;" camunda:class="com.techm.c3p.workflow.camunda.bpm.TemplateApprovalWFStart">
       <bpmn:incoming>SequenceFlow_138968u</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_015ji0a</bpmn:outgoing>
     </bpmn:serviceTask>

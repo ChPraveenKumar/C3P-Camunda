@@ -3,11 +3,11 @@
   <bpmn:process id="decompWorkflow" name="SO Decompose Workflow" isExecutable="true">
     <bpmn:endEvent id="T_C3P_SODecompose_EndEvent" name="SO Decompose Workflow Ends">
       <bpmn:extensionElements>
-        <camunda:executionListener class="com.techm.orion.camunda.bpm.SODecomposeWorkflowStart" event="start" />
+        <camunda:executionListener class="com.techm.c3p.workflow.camunda.bpm.SODecomposeWorkflowStart" event="start" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1ro14bt</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:serviceTask id="T_C3P_SODecompose_Decompose" name="Decompose SO" camunda:class="com.techm.orion.camunda.bpm.SODecomposeWorkflowStart">
+    <bpmn:serviceTask id="T_C3P_SODecompose_Decompose" name="Decompose SO" camunda:class="com.techm.c3p.workflow.camunda.bpm.SODecomposeWorkflowStart">
       <bpmn:incoming>SequenceFlow_1h1mafe</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0mfwuwm</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -18,7 +18,7 @@
           <camunda:formField id="version" label="Version" type="string" />
           <camunda:formField id="user" label="User" type="string" />
         </camunda:formData>
-        <camunda:executionListener class="com.techm.orion.camunda.bpm.SODecomposeWorkflowStart" event="end" />
+        <camunda:executionListener class="com.techm.c3p.workflow.camunda.bpm.SODecomposeWorkflowStart" event="end" />
       </bpmn:extensionElements>
       <bpmn:outgoing>SequenceFlow_1h1mafe</bpmn:outgoing>
     </bpmn:startEvent>
