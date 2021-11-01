@@ -3,11 +3,11 @@
   <bpmn:process id="C3P_FWUpgrade_workflow" name="FW Upgrade Workflow" isExecutable="true">
     <bpmn:startEvent id="T_C3P_FWUpgrade_StartEvent1" name="Start">
       <bpmn:extensionElements>
-        <camunda:executionListener class="com.techm.orion.camunda.bpm.FWUpgradeWorkflowStart" event="end" />
+        <camunda:executionListener class="com.techm.c3p.workflow.camunda.bpm.FWUpgradeWorkflowStart" event="end" />
       </bpmn:extensionElements>
       <bpmn:outgoing>SequenceFlow_1ah8f93</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:serviceTask id="T_C3P_FWUpgrade_Login" name="Login" camunda:class="com.techm.orion.camunda.bpm.FWUpgradeWorkflowStart">
+    <bpmn:serviceTask id="T_C3P_FWUpgrade_Login" name="Login" camunda:class="com.techm.c3p.workflow.camunda.bpm.FWUpgradeWorkflowStart">
       <bpmn:documentation>Login to device and check if successful</bpmn:documentation>
       <bpmn:incoming>SequenceFlow_1ah8f93</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1scoo3g</bpmn:outgoing>
@@ -17,7 +17,7 @@
       <bpmn:outgoing>SequenceFlow_1may3la</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1be5ots</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="T_C3P_FWUpgrade_CheckFlash" name="Check flash size" camunda:class="com.techm.orion.camunda.bpm.FWUpgradeWorkflowStart">
+    <bpmn:serviceTask id="T_C3P_FWUpgrade_CheckFlash" name="Check flash size" camunda:class="com.techm.c3p.workflow.camunda.bpm.FWUpgradeWorkflowStart">
       <bpmn:documentation>Check flash size</bpmn:documentation>
       <bpmn:incoming>SequenceFlow_1may3la</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0klz79q</bpmn:outgoing>
@@ -27,7 +27,7 @@
       <bpmn:outgoing>SequenceFlow_1wsggaz</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1fu6twu</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="T_C3P_FWUpgrade_Backup" name="Back up" camunda:class="com.techm.orion.camunda.bpm.FWUpgradeWorkflowStart">
+    <bpmn:serviceTask id="T_C3P_FWUpgrade_Backup" name="Back up" camunda:class="com.techm.c3p.workflow.camunda.bpm.FWUpgradeWorkflowStart">
       <bpmn:incoming>SequenceFlow_1wsggaz</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0mjtf0q</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -36,7 +36,7 @@
       <bpmn:outgoing>SequenceFlow_191l8uh</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0vikpu7</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="T_C3P_FWUpgrade_OSDownload" name="OS Download" camunda:class="com.techm.orion.camunda.bpm.FWUpgradeWorkflowStart">
+    <bpmn:serviceTask id="T_C3P_FWUpgrade_OSDownload" name="OS Download" camunda:class="com.techm.c3p.workflow.camunda.bpm.FWUpgradeWorkflowStart">
       <bpmn:incoming>SequenceFlow_191l8uh</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1r55d9c</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -45,7 +45,7 @@
       <bpmn:outgoing>SequenceFlow_02tioma</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1v3f4mi</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="T_C3P_FWUpgrade_BootSystemFlash" name="Boot system flash" camunda:class="com.techm.orion.camunda.bpm.FWUpgradeWorkflowStart">
+    <bpmn:serviceTask id="T_C3P_FWUpgrade_BootSystemFlash" name="Boot system flash" camunda:class="com.techm.c3p.workflow.camunda.bpm.FWUpgradeWorkflowStart">
       <bpmn:incoming>SequenceFlow_02tioma</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1rk5ogn</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -54,7 +54,7 @@
       <bpmn:outgoing>SequenceFlow_03sahak</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_10ouke8</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="T_C3P_FWUpgrade_Reload" name="Reload" camunda:class="com.techm.orion.camunda.bpm.FWUpgradeWorkflowStart">
+    <bpmn:serviceTask id="T_C3P_FWUpgrade_Reload" name="Reload" camunda:class="com.techm.c3p.workflow.camunda.bpm.FWUpgradeWorkflowStart">
       <bpmn:incoming>SequenceFlow_03sahak</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1rt28s3</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -63,13 +63,13 @@
       <bpmn:outgoing>SequenceFlow_0llsfrl</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_09kam52</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="T_C3P_FWUpgrade_Postlogin" name="Postlogin" camunda:class="com.techm.orion.camunda.bpm.FWUpgradeWorkflowStart">
+    <bpmn:serviceTask id="T_C3P_FWUpgrade_Postlogin" name="Postlogin" camunda:class="com.techm.c3p.workflow.camunda.bpm.FWUpgradeWorkflowStart">
       <bpmn:incoming>SequenceFlow_0llsfrl</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0w3elq6</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:endEvent id="T_C3P_FWUpgrade_EndEvent">
       <bpmn:extensionElements>
-        <camunda:executionListener class="com.techm.orion.camunda.bpm.FWUpgradeWorkflowStart" event="start" />
+        <camunda:executionListener class="com.techm.c3p.workflow.camunda.bpm.FWUpgradeWorkflowStart" event="start" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1be5ots</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_1fu6twu</bpmn:incoming>

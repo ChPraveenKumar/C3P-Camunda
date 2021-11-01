@@ -2,7 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.orion.camunda</groupId>
+  <groupId>com.techm.c3p.workflow.camunda</groupId>
   <artifactId>C3PCamunda</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
@@ -133,7 +133,7 @@
 		<dependency> 
 			<groupId>mysql</groupId> 
 			<artifactId>mysql-connector-java</artifactId> 
-			<version>5.1.9</version> 
+			<version>8.0.23</version> 
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/junit/junit -->

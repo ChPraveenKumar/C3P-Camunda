@@ -1,4 +1,4 @@
-package com.techm.orion.camunda.service;
+package com.techm.c3p.workflow.camunda.service;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -16,9 +16,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.techm.orion.camunda.common.DBPythonUrlSingleton;
-import com.techm.orion.camunda.common.DBUrlSingleton;
-import com.techm.orion.camunda.common.LoggerUtil;
+import com.techm.c3p.workflow.camunda.common.DBPythonUrlSingleton;
+import com.techm.c3p.workflow.camunda.common.LoggerUtil;
 
 public class CamundaInvokeC3PPythonRestService {
 	private static String endpointUrl = DBPythonUrlSingleton.getInstance().getEndpointUrl();

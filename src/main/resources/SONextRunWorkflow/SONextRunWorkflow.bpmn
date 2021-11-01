@@ -3,12 +3,12 @@
   <bpmn:process id="C3P_SO_NextRun_Workflow" name="SO Next Run Workflow" isExecutable="true">
     <bpmn:endEvent id="T_C3P_SONextRun_EndEvent" name="Next Run Workflow Ends">
       <bpmn:extensionElements>
-        <camunda:executionListener class="com.techm.orion.camunda.bpm.SONextRunWorkflowStart" event="start" />
+        <camunda:executionListener class="com.techm.c3p.workflow.camunda.bpm.SONextRunWorkflowStart" event="start" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0fr8dk9</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_05ntkb3</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:serviceTask id="T_C3P_SONextRun_Nextrun" name="Call next run endpoint" camunda:class="com.techm.orion.camunda.bpm.SONextRunWorkflowStart">
+    <bpmn:serviceTask id="T_C3P_SONextRun_Nextrun" name="Call next run endpoint" camunda:class="com.techm.c3p.workflow.camunda.bpm.SONextRunWorkflowStart">
       <bpmn:incoming>SequenceFlow_1h1mafe</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1isex9f</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -19,7 +19,7 @@
           <camunda:formField id="version" label="Version" type="string" />
           <camunda:formField id="user" label="User" type="string" />
         </camunda:formData>
-        <camunda:executionListener class="com.techm.orion.camunda.bpm.SONextRunWorkflowStart" event="end" />
+        <camunda:executionListener class="com.techm.c3p.workflow.camunda.bpm.SONextRunWorkflowStart" event="end" />
       </bpmn:extensionElements>
       <bpmn:outgoing>SequenceFlow_1h1mafe</bpmn:outgoing>
     </bpmn:startEvent>
@@ -33,7 +33,7 @@
     <bpmn:sequenceFlow id="SequenceFlow_17xiz6u" name="Yes" sourceRef="ExclusiveGateway_022j076" targetRef="T_C3P_SONextRun_CallNotificationApi">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${data.equals("true")}]]></bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:serviceTask id="T_C3P_SONextRun_CallNotificationApi" name="Call notification API" camunda:class="com.techm.orion.camunda.bpm.SONextRunWorkflowStart">
+    <bpmn:serviceTask id="T_C3P_SONextRun_CallNotificationApi" name="Call notification API" camunda:class="com.techm.c3p.workflow.camunda.bpm.SONextRunWorkflowStart">
       <bpmn:incoming>SequenceFlow_17xiz6u</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0fr8dk9</bpmn:outgoing>
     </bpmn:serviceTask>

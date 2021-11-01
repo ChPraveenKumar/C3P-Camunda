@@ -1,4 +1,4 @@
-package com.techm.orion.camunda.resource;
+package com.techm.c3p.workflow.camunda.resource;
 
 import java.util.HashSet;
 import java.util.Set;

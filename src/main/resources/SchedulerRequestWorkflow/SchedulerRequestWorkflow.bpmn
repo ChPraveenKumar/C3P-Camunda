@@ -3,7 +3,7 @@
   <bpmn:process id="C3P_Schedule_Request_Workflow" name="Schedule Request Workflow" isExecutable="true">
     <bpmn:intermediateCatchEvent id="T_C3P_ScheduleRequest_WaitDuration" name="Waiting for Scheduled time">
       <bpmn:extensionElements>
-        <camunda:executionListener class="com.techm.orion.camunda.bpm.ScheduleReqWFStart" event="start" />
+        <camunda:executionListener class="com.techm.c3p.workflow.camunda.bpm.ScheduleReqWFStart" event="start" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_12unnb1</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0for9ex</bpmn:outgoing>
@@ -24,13 +24,13 @@
     </bpmn:callActivity>
     <bpmn:endEvent id="T_C3P_ScheduleRequest_EndEvent" name="Schedule Request Workflow Ends">
       <bpmn:extensionElements>
-        <camunda:executionListener class="com.techm.orion.camunda.bpm.ScheduleReqWFStart" event="start" />
+        <camunda:executionListener class="com.techm.c3p.workflow.camunda.bpm.ScheduleReqWFStart" event="start" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_05syrko</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_05syrko" sourceRef="T_C3P_ScheduleRequest_InvokeNewRequestWF" targetRef="T_C3P_ScheduleRequest_EndEvent" />
     <bpmn:sequenceFlow id="SequenceFlow_12unnb1" sourceRef="T_C3P_ScheduleRequest_FetchRequestDetailsfromDB" targetRef="T_C3P_ScheduleRequest_WaitDuration" />
-    <bpmn:serviceTask id="T_C3P_ScheduleRequest_FetchRequestDetailsfromDB" name="Fetch Request Details from DB" camunda:class="com.techm.orion.camunda.bpm.ScheduleReqWFStart">
+    <bpmn:serviceTask id="T_C3P_ScheduleRequest_FetchRequestDetailsfromDB" name="Fetch Request Details from DB" camunda:class="com.techm.c3p.workflow.camunda.bpm.ScheduleReqWFStart">
       <bpmn:incoming>SequenceFlow_1h1mafe</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_12unnb1</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -41,7 +41,7 @@
           <camunda:formField id="version" label="Version" type="string" />
           <camunda:formField id="user" label="User" type="string" />
         </camunda:formData>
-        <camunda:executionListener class="com.techm.orion.camunda.bpm.ScheduleReqWFStart" event="end" />
+        <camunda:executionListener class="com.techm.c3p.workflow.camunda.bpm.ScheduleReqWFStart" event="end" />
       </bpmn:extensionElements>
       <bpmn:outgoing>SequenceFlow_1h1mafe</bpmn:outgoing>
     </bpmn:startEvent>

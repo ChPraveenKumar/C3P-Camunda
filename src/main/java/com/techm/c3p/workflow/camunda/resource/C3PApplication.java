@@ -1,4 +1,4 @@
-package com.techm.orion.camunda.resource;
+package com.techm.c3p.workflow.camunda.resource;
 
 import org.camunda.bpm.application.ProcessApplication;
 import org.camunda.bpm.application.impl.ServletProcessApplication;
