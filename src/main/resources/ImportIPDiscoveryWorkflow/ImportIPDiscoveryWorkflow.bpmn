@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_029fe7h" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.11.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="C3P_ImportIP_Discovery_Workflow" name="Import IP Discovery Workflow" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:extensionElements>
+        <camunda:executionListener class="com.techm.c3p.workflow.camunda.bpm.ImportIPDiscoveryWorkflowStart" event="end" />
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_0pk1mvi</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0pk1mvi" sourceRef="StartEvent_1" targetRef="Activity_1_StageToDashboard" />
+    <bpmn:sequenceFlow id="Flow_0htj30o" sourceRef="Activity_1_StageToDashboard" targetRef="Activity_2_PerformDiscovery" />
+    <bpmn:sequenceFlow id="Flow_1rdeq2y" sourceRef="Activity_2_PerformDiscovery" targetRef="Activity_3_CopyIntoHistoryTable" />
+    <bpmn:endEvent id="End_Event_1">
+      <bpmn:extensionElements>
+        <camunda:executionListener class="com.techm.c3p.workflow.camunda.bpm.ImportIPDiscoveryWorkflowStart" event="start" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_008598o</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_008598o" sourceRef="Activity_3_CopyIntoHistoryTable" targetRef="End_Event_1" />
+    <bpmn:serviceTask id="Activity_1_StageToDashboard" name="Staging Data to Dashboard" camunda:class="com.techm.c3p.workflow.camunda.bpm.ImportIPDiscoveryWorkflowStart">
+      <bpmn:incoming>Flow_0pk1mvi</bpmn:incoming>
+      <bpmn:outgoing>Flow_0htj30o</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_2_PerformDiscovery" name="perform Discovery for every row" camunda:class="com.techm.c3p.workflow.camunda.bpm.ImportIPDiscoveryWorkflowStart">
+      <bpmn:incoming>Flow_0htj30o</bpmn:incoming>
+      <bpmn:outgoing>Flow_1rdeq2y</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_3_CopyIntoHistoryTable" name="Copy Staging Data to History table" camunda:class="com.techm.c3p.workflow.camunda.bpm.ImportIPDiscoveryWorkflowStart">
+      <bpmn:incoming>Flow_1rdeq2y</bpmn:incoming>
+      <bpmn:outgoing>Flow_008598o</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="C3P_ImportIP_Discovery_Workflow">
+      <bpmndi:BPMNEdge id="Flow_008598o_di" bpmnElement="Flow_008598o">
+        <di:waypoint x="670" y="120" />
+        <di:waypoint x="732" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rdeq2y_di" bpmnElement="Flow_1rdeq2y">
+        <di:waypoint x="510" y="120" />
+        <di:waypoint x="570" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0htj30o_di" bpmnElement="Flow_0htj30o">
+        <di:waypoint x="350" y="120" />
+        <di:waypoint x="410" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pk1mvi_di" bpmnElement="Flow_0pk1mvi">
+        <di:waypoint x="198" y="120" />
+        <di:waypoint x="250" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_07olyq1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="162" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_098nnry_di" bpmnElement="End_Event_1">
+        <dc:Bounds x="732" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pc28fk_di" bpmnElement="Activity_1_StageToDashboard">
+        <dc:Bounds x="250" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1qnqeim_di" bpmnElement="Activity_2_PerformDiscovery">
+        <dc:Bounds x="410" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pxndus_di" bpmnElement="Activity_3_CopyIntoHistoryTable">
+        <dc:Bounds x="570" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
