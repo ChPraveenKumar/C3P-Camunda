@@ -60,6 +60,12 @@ public class CamundaInvokeC3PRestService {
 			+ "/C3P/DeliverConfigurationAndBackupTest/firmwareupgradeLogin";
 	private static final String FWU_OS_DOWNLOAD = endpointUrl
 			+ "/C3P/DeliverConfigurationAndBackupTest/c3pCopyImageOnDevice";
+	private static final String STAGING_DATA_TO_DASHBOARD = endpointUrl
+			+ "/C3P/discovery/stagingDataToRespectiveDashboard";
+	private static final String PERFORM_DISCOVERY_FOR_EVERYROW = endpointUrl
+			+ "/C3P/discovery/performDiscoveryForEveryRow";
+	private static final String COPY_INTO_HISTORY_TABLE = endpointUrl
+			+ "/C3PDataServices/dataservices/copyIntoHistoryTable";
 	
 	
 	public String checkDeviceReachability(String businessKey, String version) {
@@ -126,6 +132,28 @@ public class CamundaInvokeC3PRestService {
 		logger.info("Inside Instantiation");
 		return executeBpmProcess(PERFORM_INSTANTIATION, businessKey, version);
 	}
+	
+	public String stagingDataToRespectiveDashboard(String businessKey, String status, String user) {
+		logger.info("Inside stagingToDashboard");
+		return executeBpmProcess(STAGING_DATA_TO_DASHBOARD, businessKey, status, user);
+	}
+	
+	public String performModuleForEveryRow(String businessKey, String status, String user, String sourceSystem) {
+		logger.info("Inside performModuleForEveryRow ");
+		String returnValue = null;
+		if(businessKey.substring(3, 6).equalsIgnoreCase("DIS")) {
+			logger.info("Inside DIS");
+			returnValue = executeBpmProcess(PERFORM_DISCOVERY_FOR_EVERYROW, businessKey, status, user, sourceSystem);
+		} else if(businessKey.substring(3, 5).equalsIgnoreCase("")) {
+			logger.info("Inside else");
+		}
+		return returnValue;
+	}
+	
+	public String copyIntoHistoryTable(String businessKey, String status, String user) {
+		logger.info("Inside copyIntoHistoryTable");
+		return executeBpmProcess(COPY_INTO_HISTORY_TABLE, businessKey, status, user);
+	}
 
 	
 	@SuppressWarnings("unchecked")
@@ -140,7 +168,7 @@ public class CamundaInvokeC3PRestService {
 		jsonObj.put("version", version);
 		jsonObj.put("processId", processId);
 		jsonObj.put("user", user);
-
+		logger.info("JSON is  " + jsonObj);
 		HttpURLConnection httpConnection = openHttpConnection(INSERT_REQUEST_IN_DB);
 		if (httpConnection != null) {
 			writeOutputStream(httpConnection, jsonObj);
@@ -200,6 +228,7 @@ public class CamundaInvokeC3PRestService {
 
 	private void writeOutputStream(HttpURLConnection httpConnection, JSONObject jsonObject) {
 		try (OutputStream outputStream = httpConnection.getOutputStream()) {
+			logger.info("Inside writeOutputStream - "+jsonObject );
 			outputStream.write(jsonObject.toString().getBytes(StandardCharsets.UTF_8));
 		} catch (IOException ioExe) {
 			logger.error("writeOutputStream - IO Exception ->" + ioExe.getMessage());
@@ -208,6 +237,7 @@ public class CamundaInvokeC3PRestService {
 
 	private String getInputStream(HttpURLConnection httpConnection) {
 		String result = null;
+		logger.info("Inside getInputStream");
 		try (InputStream inputStream = new BufferedInputStream(httpConnection.getInputStream())) {
 			result = IOUtils.toString(inputStream, StandardCharsets.UTF_8.name());
 			logger.info("getInputStream - " + result);
@@ -235,6 +265,7 @@ public class CamundaInvokeC3PRestService {
 		if (mileStoneStatus != null) {
 			jsonObject.put("mileStoneStatus", mileStoneStatus);
 		}
+		logger.info("Created JSON "+jsonObject);
 		return jsonObject;
 	}
 
@@ -246,6 +277,7 @@ public class CamundaInvokeC3PRestService {
 			input = getInputStream(httpConnection);
 			if(input !=null && input.trim().length()>0) {
 				JSONObject json = (JSONObject) parser.parse(input);
+				logger.info("jsonOutput"+json );
 				output = json.get("output").toString();
 			}
 		} catch (ParseException exe) {
@@ -268,6 +300,21 @@ public class CamundaInvokeC3PRestService {
 		HttpURLConnection httpConnection = openHttpConnection(endpointUrl);
 		if (httpConnection != null) {
 			writeOutputStream(httpConnection, getJsonObject(businessKey, version, requestType));
+			outputVar = jsonOutput(httpConnection);
+		}
+		logger.info("executeBpmProcess outputVar ->" + outputVar);
+		triggerExternalService(endpointUrl, businessKey, version, requestType, outputVar);
+		return outputVar;
+	}
+	
+	private String executeBpmProcess(String endpointUrl, String businessKey, String version, String requestType, String sourceSystem) {
+		String outputVar = null;
+		logger.info("endpointUrl " + endpointUrl);
+		logger.info("businessKey " + businessKey);
+		logger.info("version " + version);
+		HttpURLConnection httpConnection = openHttpConnection(endpointUrl);
+		if (httpConnection != null) {
+			writeOutputStream(httpConnection, getJsonObject(businessKey, version, requestType, sourceSystem, null));
 			outputVar = jsonOutput(httpConnection);
 		}
 		logger.info("executeBpmProcess outputVar ->" + outputVar);
