@@ -20,6 +20,7 @@ public class ImportIPDiscoveryWorkflowStart implements JavaDelegate{
 		String processId = execution.getProcessInstanceId();
 		Object user = execution.getVariable("user");
 		Object sourceSystem = execution.getVariable("requestType");
+		Object importDetails = execution.getVariable("importDetails");
 				
 	
 		if(execution.getCurrentActivityId().equals("StartEvent_1")){
@@ -29,9 +30,9 @@ public class ImportIPDiscoveryWorkflowStart implements JavaDelegate{
 			cs.insertRequestInDB(businessKey, (String) status, processId, (String) user);
 		}
 		else if(execution.getCurrentActivityId().equals("Activity_1_StageToDashboard")){
-			logger.info("Staging table data to respective dashboard method");
+			logger.info("Staging table data to respective dashboard method "+importDetails);
 			CamundaInvokeC3PRestService cs = new CamundaInvokeC3PRestService();
-			String result = cs.stagingDataToRespectiveDashboard(businessKey, (String) status, (String) user);
+			String result = cs.stagingDataToRespectiveDashboard(businessKey, (String) status, (String) user, importDetails);
 			logger.info("Staging result "+result);
 			execution.setVariable("data", result);
 		}
