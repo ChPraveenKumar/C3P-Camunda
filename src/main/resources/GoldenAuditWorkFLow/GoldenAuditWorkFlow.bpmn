@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.1.2">
+  <bpmn:process id="C3P_Golden_Audit_WorkFlow" name="Golden Audit FLow" isExecutable="true">
+    <bpmn:startEvent id="T_C3P_GoldenAudit_StartEvent1" name="Start">
+      <bpmn:extensionElements>
+        <camunda:executionListener class="com.techm.c3p.workflow.camunda.bpm.FWUpgradeWorkflowStart" event="end" />
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_1ah8f93</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="T_C3P_Golde_Audit_PreProcess" name="PreProcess" camunda:class="com.techm.c3p.workflow.camunda.bpm.GoldenAuditWorkFlow">
+      <bpmn:documentation>Check Backup File Status</bpmn:documentation>
+      <bpmn:incoming>SequenceFlow_1ah8f93</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1scoo3g</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_1mgqmv2" name="Is PreProess Sucesss">
+      <bpmn:incoming>SequenceFlow_1scoo3g</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1may3la</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1be5ots</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="T_C3P_Golden_Audit" name="Network Audit" camunda:class="com.techm.c3p.workflow.camunda.bpm.GoldenAuditWorkFlow">
+      <bpmn:documentation>Check flash size</bpmn:documentation>
+      <bpmn:incoming>SequenceFlow_1may3la</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0klz79q</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1ah8f93" sourceRef="T_C3P_GoldenAudit_StartEvent1" targetRef="T_C3P_Golde_Audit_PreProcess" />
+    <bpmn:sequenceFlow id="SequenceFlow_1scoo3g" sourceRef="T_C3P_Golde_Audit_PreProcess" targetRef="ExclusiveGateway_1mgqmv2" />
+    <bpmn:sequenceFlow id="SequenceFlow_1may3la" name="YES" sourceRef="ExclusiveGateway_1mgqmv2" targetRef="T_C3P_Golden_Audit">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${data.equals("true")}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_0klz79q" sourceRef="T_C3P_Golden_Audit" targetRef="ExclusiveGateway_039dro1" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_039dro1" name="Is Golden Audit Completed">
+      <bpmn:incoming>SequenceFlow_0klz79q</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1fu6twu</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0cxegbf</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_1fu6twu" name="NO" sourceRef="ExclusiveGateway_039dro1" targetRef="T_C3P_Golden_Audit_Report">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${data.equals("false")}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1be5ots" name="NO" sourceRef="ExclusiveGateway_1mgqmv2" targetRef="T_C3P_Golden_Audit_Report">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${data.equals("false")}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_0cxegbf" name="Yes" sourceRef="ExclusiveGateway_039dro1" targetRef="T_C3P_Golden_Audit_Report" />
+    <bpmn:endEvent id="EndEvent_05ly3qs" name="">
+      <bpmn:incoming>SequenceFlow_01wjtd3</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_01wjtd3" sourceRef="T_C3P_Golden_Audit_Report" targetRef="EndEvent_05ly3qs" />
+    <bpmn:serviceTask id="T_C3P_Golden_Audit_Report" name="Final Report" camunda:class="com.techm.c3p.workflow.camunda.bpm.GoldenAuditWorkFlow">
+      <bpmn:incoming>SequenceFlow_1fu6twu</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1be5ots</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0cxegbf</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_01wjtd3</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="C3P_Golden_Audit_WorkFlow">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="T_C3P_GoldenAudit_StartEvent1">
+        <dc:Bounds x="173" y="437" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="179" y="473" width="25" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_1x5pzhn_di" bpmnElement="T_C3P_Golde_Audit_PreProcess">
+        <dc:Bounds x="286" y="415" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_1mgqmv2_di" bpmnElement="ExclusiveGateway_1mgqmv2" isMarkerVisible="true">
+        <dc:Bounds x="441" y="430" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="435" y="480" width="64" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0nndjl6_di" bpmnElement="T_C3P_Golden_Audit">
+        <dc:Bounds x="549" y="415" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1ah8f93_di" bpmnElement="SequenceFlow_1ah8f93">
+        <di:waypoint x="209" y="455" />
+        <di:waypoint x="286" y="455" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="202.5" y="110" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1scoo3g_di" bpmnElement="SequenceFlow_1scoo3g">
+        <di:waypoint x="386" y="455" />
+        <di:waypoint x="441" y="455" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="368.5" y="110" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1may3la_di" bpmnElement="SequenceFlow_1may3la">
+        <di:waypoint x="491" y="455" />
+        <di:waypoint x="549" y="455" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="495" y="435" width="22" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0klz79q_di" bpmnElement="SequenceFlow_0klz79q">
+        <di:waypoint x="649" y="455" />
+        <di:waypoint x="707" y="455" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="633" y="110" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ExclusiveGateway_039dro1_di" bpmnElement="ExclusiveGateway_039dro1" isMarkerVisible="true">
+        <dc:Bounds x="707" y="430" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="694" y="480" width="77" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1fu6twu_di" bpmnElement="SequenceFlow_1fu6twu">
+        <di:waypoint x="732" y="430" />
+        <di:waypoint x="732" y="191" />
+        <di:waypoint x="971" y="191" />
+        <di:waypoint x="971" y="415" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="819" y="173" width="17" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1be5ots_di" bpmnElement="SequenceFlow_1be5ots">
+        <di:waypoint x="466" y="430" />
+        <di:waypoint x="466" y="102" />
+        <di:waypoint x="970" y="102" />
+        <di:waypoint x="971" y="414" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="634" y="81" width="17" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0cxegbf_di" bpmnElement="SequenceFlow_0cxegbf">
+        <di:waypoint x="757" y="455" />
+        <di:waypoint x="921" y="455" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="875" y="484" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_05ly3qs_di" bpmnElement="EndEvent_05ly3qs">
+        <dc:Bounds x="1185" y="437" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1193" y="480" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_01wjtd3_di" bpmnElement="SequenceFlow_01wjtd3">
+        <di:waypoint x="1021" y="455" />
+        <di:waypoint x="1185" y="455" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0y12x09_di" bpmnElement="T_C3P_Golden_Audit_Report">
+        <dc:Bounds x="921" y="415" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

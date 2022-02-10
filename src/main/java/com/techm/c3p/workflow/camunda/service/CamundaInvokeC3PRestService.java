@@ -70,7 +70,7 @@ public class CamundaInvokeC3PRestService {
 			+ "/C3PDataServices/dataservices/copyIntoHistoryTable";
 	private static final String PERFORM_INVENTORY_FOR_EVERYROW = endpointUrl
 			+ "/C3P/discovery/performOnBoardingForEveryRow";
-	
+	private static final String PRE_PROCESS = endpointUrl + "/C3P/PreProcess/preProcessTest";
 	
 	public String checkDeviceReachability(String businessKey, String version) {
 		logger.info("Inside checkDeviceReachability method");
@@ -447,4 +447,8 @@ public class CamundaInvokeC3PRestService {
 		return executeBpmProcess(FWU_POST_LOGIN, businessKey, version);
 	}
 	
+	public String preProcess(String businessKey, String version) {
+		logger.info("Inside PreProcess");
+		return executeBpmProcess(PRE_PROCESS, businessKey, version);
+	}
 }
