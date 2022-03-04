@@ -69,7 +69,7 @@ public class CamundaInvokeC3PRestService {
 	private static final String COPY_INTO_HISTORY_TABLE = endpointUrl
 			+ "/C3PDataServices/dataservices/copyIntoHistoryTable";
 	private static final String PERFORM_INVENTORY_FOR_EVERYROW = endpointUrl
-			+ "/C3P/discovery/performOnBoardingForEveryRow";
+			+ "/C3P/onboarding/performOnBoardingForEveryRow";
 	private static final String PRE_PROCESS = endpointUrl + "/C3P/PreProcess/preProcessTest";
 	
 	public String checkDeviceReachability(String businessKey, String version) {
